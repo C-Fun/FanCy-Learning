@@ -1,0 +1,11 @@
+*.pyc
+*.csv
+*.pth
+*.log
+
+/.idea/
+**/__pycache__/
+**/data/
+**/logs_new/
+**/trained_models_ann/
+
