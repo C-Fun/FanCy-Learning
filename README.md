@@ -13,7 +13,7 @@ Support:
   - STL10
   - ImageNet
 
-Run Command
+Running Command:
 
 ```shell
 # train
