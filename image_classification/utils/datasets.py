@@ -14,18 +14,22 @@ class Dataset(object):
     TorchDataset = None
 
     def __init__(self, path, im_size=None):
+        self.train_transform = None
+        self.test_transform = None
+        self.train_dataset = None
+        self.test_dataset = None
+
         self.path = path
         if type(im_size) == int:
             im_size = (im_size, im_size)
 
-        if im_size==None:
+        if im_size is None:
             self.im_size = self.ori_im_size
         else:
             self.im_size = im_size
 
         self.set_train_transform()
         self.set_test_transform()
-
         self.set_train_dataset()
         self.set_test_dataset()
 
@@ -108,16 +112,11 @@ class STL10(Dataset):
     def __init__(self, path='./', im_size=None):
         super(STL10, self).__init__(path+'/data/stl10_data', im_size)
 
-    def set_train_dataset(self, custom_dataset=None):
-        if custom_dataset is not None:
-            self.train_dataset = custom_dataset
-            return
+    def set_train_dataset(self):
         self.train_dataset = self.TorchDataset(root=self.path, split="train", download=True,
                                                transform=self.train_transform)
-    def set_test_dataset(self, custom_dataset=None):
-        if custom_dataset is not None:
-            self.test_dataset = None
-            return
+
+    def set_test_dataset(self):
         self.test_dataset = self.TorchDataset(root=self.path, split="test", download=True,
                                               transform=self.test_transform)
 
@@ -129,26 +128,20 @@ class ImageNet(Dataset):
     TorchDataset = datasets.ImageFolder
 
     def __init__(self, path='/m2/data/imagenet', im_size=None, train_dir=None, val_dir=None):
-        if train_dir == None:
+        if train_dir is None:
             self.train_dir = os.path.join(path, 'train')
         else:
             self.train_dir = train_dir
-        if val_dir == None:
+        if val_dir is None:
             self.val_dir = os.path.join(path, 'val')
         else:
             self.val_dir = train_dir
         super(ImageNet, self).__init__(path, im_size)
 
-    def set_train_dataset(self, custom_dataset=None):
-        if custom_dataset is not None:
-            self.train_dataset = custom_dataset
-            return
+    def set_train_dataset(self):
         self.train_dataset = self.TorchDataset(self.train_dir, self.train_transform)
 
-    def set_test_dataset(self, custom_dataset=None):
-        if custom_dataset is not None:
-            self.test_dataset = custom_dataset
-            return
+    def set_test_dataset(self):
         self.test_dataset = self.TorchDataset(self.val_dir, self.test_transform)
 
 def get_dataset(name, **kwargs):
