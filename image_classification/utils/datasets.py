@@ -23,37 +23,51 @@ class Dataset(object):
         else:
             self.im_size = im_size
 
-        self.train_dataset = self.train_dataset()
-        self.test_dataset = self.test_dataset()
+        self.set_train_transform()
+        self.set_test_transform()
 
-    def train_dataset(self):
-        return self.TorchDataset(root=self.path, train=True, download=True,
-                                 transform=self.transform_train())
+        self.set_train_dataset()
+        self.set_test_dataset()
 
-    def test_dataset(self):
-        return self.TorchDataset(root=self.path, train=False, download=True,
-                                 transform=self.transform_test())
-
-    def transform_train(self):
-        if self.im_size==self.ori_im_size:
+    def set_train_transform(self, custom_transform=None):
+        if custom_transform is not None:
+            self.train_transform = custom_transform
+            return
+        if self.im_size == self.ori_im_size:
             transform = transforms.Compose([transforms.RandomCrop(self.im_size),
-                                       transforms.RandomHorizontalFlip(),
-                                       transforms.ToTensor(),
-                                       self.normalize])
+                                            transforms.RandomHorizontalFlip(),
+                                            transforms.ToTensor(),
+                                            self.normalize])
         else:
             transform = transforms.Compose([transforms.Resize(self.im_size),
-                                       transforms.RandomResizedCrop(self.im_size),
-                                       transforms.RandomHorizontalFlip(),
-                                       transforms.ToTensor(),
-                                       self.normalize])
-        return transform
+                                            transforms.RandomResizedCrop(self.im_size),
+                                            transforms.RandomHorizontalFlip(),
+                                            transforms.ToTensor(),
+                                            self.normalize])
+        self.train_transform = transform
 
-    def transform_test(self):
-        return transforms.Compose([transforms.Resize(self.im_size),
-                                   transforms.CenterCrop(self.im_size),
-                                   transforms.ToTensor(),
-                                   self.normalize,
-                                   ])
+    def set_test_transform(self, custom_transform=None):
+        if custom_transform is not None:
+            self.test_transform = custom_transform
+            return
+        self.test_transform = transforms.Compose([transforms.Resize(self.im_size),
+                                                  transforms.CenterCrop(self.im_size),
+                                                  transforms.ToTensor(),
+                                                  self.normalize])
+
+    def set_train_dataset(self, custom_dataset=None):
+        if custom_dataset is not None:
+            self.train_dataset = custom_dataset
+            return
+        self.train_dataset = self.TorchDataset(root=self.path, train=True, download=True,
+                                               transform=self.train_transform)
+
+    def set_test_dataset(self, custom_dataset=None):
+        if custom_dataset is not None:
+            self.test_dataset = custom_dataset
+            return
+        self.test_dataset = self.TorchDataset(root=self.path, train=False, download=True,
+                                              transform=self.test_transform)
 
     def train_loader(self, batch_size, shuffle=True):
         return torch.utils.data.DataLoader(dataset=self.train_dataset, batch_size=batch_size, shuffle=shuffle)
@@ -94,13 +108,18 @@ class STL10(Dataset):
     def __init__(self, path='./', im_size=None):
         super(STL10, self).__init__(path+'/data/stl10_data', im_size)
 
-    def train_dataset(self):
-        return self.TorchDataset(root=self.path, split="train", download=True,
-                                 transform=self.transform_train())
-
-    def test_dataset(self):
-        return self.TorchDataset(root=self.path, split="test", download=True,
-                                 transform=self.transform_test())
+    def set_train_dataset(self, custom_dataset=None):
+        if custom_dataset is not None:
+            self.train_dataset = custom_dataset
+            return
+        self.train_dataset = self.TorchDataset(root=self.path, split="train", download=True,
+                                               transform=self.train_transform)
+    def set_test_dataset(self, custom_dataset=None):
+        if custom_dataset is not None:
+            self.test_dataset = None
+            return
+        self.test_dataset = self.TorchDataset(root=self.path, split="test", download=True,
+                                              transform=self.test_transform)
 
 class ImageNet(Dataset):
     name = "ImageNet"
@@ -109,22 +128,28 @@ class ImageNet(Dataset):
     ori_im_size = (224, 224)
     TorchDataset = datasets.ImageFolder
 
-    def __init__(self, path='/m2/data/imagenet', im_size=None, traindir=None, valdir=None):
+    def __init__(self, path='/m2/data/imagenet', im_size=None, train_dir=None, val_dir=None):
+        if train_dir == None:
+            self.train_dir = os.path.join(path, 'train')
+        else:
+            self.train_dir = train_dir
+        if val_dir == None:
+            self.val_dir = os.path.join(path, 'val')
+        else:
+            self.val_dir = train_dir
         super(ImageNet, self).__init__(path, im_size)
-        if traindir==None:
-            self.traindir = os.path.join(path, 'train')
-        else:
-            self.traindir = traindir
-        if valdir==None:
-            self.valdir = os.path.join(path, 'val')
-        else:
-            self.valdir = traindir
 
-    def train_dataset(self):
-        return self.TorchDataset(self.traindir, self.transform_train())
+    def set_train_dataset(self, custom_dataset=None):
+        if custom_dataset is not None:
+            self.train_dataset = custom_dataset
+            return
+        self.train_dataset = self.TorchDataset(self.train_dir, self.train_transform)
 
-    def test_dataset(self):
-        return self.TorchDataset(self.valdir, self.transform_test())
+    def set_test_dataset(self, custom_dataset=None):
+        if custom_dataset is not None:
+            self.test_dataset = custom_dataset
+            return
+        self.test_dataset = self.TorchDataset(self.val_dir, self.test_transform)
 
 def get_dataset(name, **kwargs):
     NAME = name.upper()
