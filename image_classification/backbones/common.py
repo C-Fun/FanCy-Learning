@@ -8,6 +8,7 @@ from .mobilenetv2 import *
 from .mobilenetv3 import *
 from .resnet import *
 from .resnext import *
+from .swin_mlp import *
 from .swin_transformer_v2 import *
 
 from utils import load_pretrained_weight
@@ -28,12 +29,13 @@ class Network(nn.Module):
             'resnext50': resnext50,
             'resnext101': resnext101,
             'resnext152': resnext152,
+            'swin_mlp': SwinMLP,
             'swin_transformer_v2': SwinTransformerV2,
         }
         super(Network, self).__init__()
         # ========== backbone =================
         if arch in arch_dict.keys():
-            if 'transformer' in arch:
+            if arch in ['swin_mlp', 'swin_transformer_v2']:
                 assert im_size is not None
                 self.net = arch_dict[arch](img_size=im_size, num_classes=num_classes, **kwargs)
             else:

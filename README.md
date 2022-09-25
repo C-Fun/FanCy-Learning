@@ -10,6 +10,7 @@ Support:
   - MobileNetV2
   - MobileNetV3 (Small, Large)
   - ResNet & ResNeXt (with Depth: 18, 34, 50, 101, 152)
+  - SwinMLP
   - SwinTransformerV2
 - Datasets
   - Cifar10 / Cifar100
