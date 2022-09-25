@@ -8,8 +8,8 @@ Support:
 
 - Backbones
   - MobileNetV2
-  - MobileNetV3 (Small, Large)
-  - ResNet & ResNeXt (with Depth: 18, 34, 50, 101, 152)
+  - MobileNetV3 (small, large)
+  - ResNet & ResNeXt (with depth: 18, 34, 50, 101, 152)
   - SwinMLP
   - SwinTransformerV2
 - Datasets
