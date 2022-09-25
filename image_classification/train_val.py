@@ -104,7 +104,7 @@ if __name__ == '__main__':
 	# # ================================================ Data & Model ================================================
 	dataset = get_dataset(dataset_name, im_size=im_size)
 
-	model = Network(arch_name, num_classes=dataset.num_classes)
+	model = Network(arch_name, im_size=im_size, num_classes=dataset.num_classes)
 
 	total_params = sum(p.numel() for p in model.parameters())
 	print(f'{total_params:,} total parameters.')
