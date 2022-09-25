@@ -36,8 +36,9 @@ class Network(nn.Module):
         # ========== backbone =================
         if arch in arch_dict.keys():
             if arch in ['swin_mlp', 'swin_transformer_v2']:
-                assert im_size is not None
-                self.net = arch_dict[arch](img_size=im_size, num_classes=num_classes, **kwargs)
+                win_base = 32
+                assert im_size is not None and im_size % win_base == 0
+                self.net = arch_dict[arch](num_classes=num_classes, img_size=im_size, window_size=im_size//win_base, **kwargs)
             else:
                 self.net = arch_dict[arch](num_classes=num_classes, **kwargs)
         else:
