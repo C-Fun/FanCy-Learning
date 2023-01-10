@@ -1,0 +1,6 @@
+from torchvision.models import mobilenet_v2 as torchref_mobilenet_v2
+from torchvision.models import mobilenet_v3_small as torchref_mobilenet_v3_small
+from torchvision.models import mobilenet_v3_large as torchref_mobilenet_v3_large
+from torchvision.models import resnext50_32x4d as torchref_resnext50_32x4d
+from torchvision.models import resnext101_32x8d as torchref_resnext101_32x8d
+from torchvision.models import resnext101_64x4d as torchref_resnext101_64x4d

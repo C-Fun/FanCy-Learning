@@ -83,7 +83,7 @@ if __name__ == '__main__':
 	except OSError:
 		pass
 
-	identifier = f'{arch_name}_{dataset_name.lower()}_imsize{str(im_size)}'
+	identifier = f'{arch_name}_{dataset_name.lower()}_imsize{str(im_size)}_batchsize{str(batch_size)}_lr{learning_rate}'
 	log_file = os.path.join(log_file, f'{identifier}.log')
 
 	print(f'log file saves to: {log_file}')

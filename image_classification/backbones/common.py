@@ -10,6 +10,7 @@ from .resnet import *
 from .resnext import *
 from .swin_mlp import *
 from .swin_transformer_v2 import *
+from .torch_reference import *
 
 from utils import load_pretrained_weight
 
@@ -17,8 +18,8 @@ class Network(nn.Module):
     def __init__(self, arch, num_classes, im_size=None, pth_file=None, **kwargs):
         arch_dict = {
             'mobilenetv2': mobilenetv2,
-            'mobilenetv3_small': MobileNetV3_Small,
-            'mobilenetv3_large': MobileNetV3_Large,
+            'mobilenetv3_small': mobilenetv3_small,
+            'mobilenetv3_large': mobilenetv3_large,
             'resnet18': resnet18,
             'resnet34': resnet34,
             'resnet50': resnet50,
@@ -31,6 +32,12 @@ class Network(nn.Module):
             'resnext152': resnext152,
             'swin_mlp': SwinMLP,
             'swin_transformer_v2': SwinTransformerV2,
+            'torchref_mobilenet_v2': torchref_mobilenet_v2,
+            'torchref_mobilenet_v3_small': torchref_mobilenet_v3_small,
+            'torchref_mobilenet_v3_large': torchref_mobilenet_v3_large,
+            'torchref_resnext50_32x4d': torchref_resnext50_32x4d,
+            'torchref_resnext101_32x8d': torchref_resnext101_32x8d,
+            'torchref_resnext101_64x4d': torchref_resnext101_64x4d,
         }
         super(Network, self).__init__()
         # ========== backbone =================
