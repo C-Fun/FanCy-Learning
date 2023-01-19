@@ -38,7 +38,7 @@ class Dataset(object):
             self.train_transform = custom_transform
             return
         if self.im_size == self.ori_im_size:
-            transform = transforms.Compose([transforms.RandomCrop(self.im_size),
+            transform = transforms.Compose([transforms.RandomResizedCrop(self.im_size),
                                             transforms.RandomHorizontalFlip(),
                                             transforms.ToTensor(),
                                             self.normalize])
