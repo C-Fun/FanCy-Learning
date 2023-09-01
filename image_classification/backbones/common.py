@@ -8,6 +8,7 @@ from .mobilenetv2 import *
 from .mobilenetv3 import *
 from .resnet import *
 from .resnext import *
+from .vision_transformer import *
 from .swin_mlp import *
 from .swin_transformer_v2 import *
 from .torch_reference import *
@@ -30,6 +31,7 @@ class Network(nn.Module):
             'resnext50': resnext50,
             'resnext101': resnext101,
             'resnext152': resnext152,
+            'vision_transformer': vision_transformer,
             'swin_mlp': SwinMLP,
             'swin_transformer_v2': SwinTransformerV2,
             'torchref_mobilenet_v2': torchref_mobilenet_v2,
@@ -46,6 +48,9 @@ class Network(nn.Module):
                 win_base = 32
                 assert im_size is not None and im_size % win_base == 0
                 self.net = arch_dict[arch](num_classes=num_classes, img_size=im_size, window_size=im_size//win_base, **kwargs)
+            elif arch in ['vision_transformer']:
+                assert im_size is not None
+                self.net = arch_dict[arch](num_classes=num_classes, image_size=im_size, **kwargs)
             else:
                 self.net = arch_dict[arch](num_classes=num_classes, **kwargs)
         else:
