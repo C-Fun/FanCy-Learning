@@ -4,7 +4,7 @@ Fang Chen's Deep Learning Toolbox
 
 ## Image Classification
 
-Support:
+Backbones & Datasets Zoo:
 
 - Backbones
   - [MobileNetV2](https://openaccess.thecvf.com/content_cvpr_2018/html/Sandler_MobileNetV2_Inverted_Residuals_CVPR_2018_paper.html) -- [code link](https://github.com/tonylins/pytorch-mobilenet-v2)
