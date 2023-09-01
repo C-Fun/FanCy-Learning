@@ -10,6 +10,7 @@ Support:
   - MobileNetV2
   - MobileNetV3 (small, large)
   - ResNet & ResNeXt (with depth: 18, 34, 50, 101, 152)
+  - Vision Transformer
   - SwinMLP
   - SwinTransformerV2
 - Datasets
