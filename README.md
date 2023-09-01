@@ -13,9 +13,9 @@ Support:
   - [Vision Transformer](https://arxiv.org/abs/2010.11929) -- [code link](https://github.com/lucidrains/vit-pytorch)
   - SwinMLP & [SwinTransformerV2](https://openaccess.thecvf.com/content/CVPR2022/html/Liu_Swin_Transformer_V2_Scaling_Up_Capacity_and_Resolution_CVPR_2022_paper.html) -- [code link](https://github.com/microsoft/Swin-Transformer)
 - Datasets
-  - Cifar10 / Cifar100
-  - STL10
-  - ImageNet
+  - [Cifar10 / Cifar100](https://www.cs.toronto.edu/~kriz/cifar.html)
+  - [STL10](http://cs.stanford.edu/~acoates/stl10)
+  - [ImageNet](https://www.image-net.org/index.php)
 
 Running Command:
 
