@@ -31,7 +31,11 @@ class Network(nn.Module):
             'resnext50': resnext50,
             'resnext101': resnext101,
             'resnext152': resnext152,
-            'vision_transformer': vision_transformer,
+            'vit_b_16': vit_b_16,
+            'vit_b_32': vit_b_32,
+            'vit_l_16': vit_l_16,
+            'vit_l_32': vit_l_32,
+            'vit_h_14': vit_h_14,
             'swin_mlp': SwinMLP,
             'swin_transformer_v2': SwinTransformerV2,
             'torchref_mobilenet_v2': torchref_mobilenet_v2,
@@ -48,7 +52,7 @@ class Network(nn.Module):
                 win_base = 32
                 assert im_size is not None and im_size % win_base == 0
                 self.net = arch_dict[arch](num_classes=num_classes, img_size=im_size, window_size=im_size//win_base, **kwargs)
-            elif arch in ['vision_transformer']:
+            elif arch in ['vit_b_16', 'vit_b_32', 'vit_l_16', 'vit_l_32', 'vit_h_14']:
                 assert im_size is not None
                 self.net = arch_dict[arch](num_classes=num_classes, image_size=im_size, **kwargs)
             else:

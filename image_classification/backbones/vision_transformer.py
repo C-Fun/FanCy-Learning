@@ -4,7 +4,7 @@ from torch import nn
 from einops import rearrange, repeat
 from einops.layers.torch import Rearrange
 
-__all__ = ['ViT', 'vision_transformer']
+__all__ = ['ViT', 'vit_b_16', 'vit_b_32', 'vit_l_16', 'vit_l_32', 'vit_h_14']
 
 # helpers
 
@@ -129,6 +129,22 @@ class ViT(nn.Module):
         return self.mlp_head(x)
 
 
-def vision_transformer(**kwargs):
-    model = ViT(patch_size=16, dim=512, depth=6, heads=8, mlp_dim=2048, **kwargs)
+def vit_b_16(**kwargs):
+    model = ViT(patch_size=16, dim=768, depth=12, heads=12, mlp_dim=3072, **kwargs)
+    return model
+
+def vit_b_32(**kwargs):
+    model = ViT(patch_size=32, dim=768, depth=12, heads=12, mlp_dim=3072, **kwargs)
+    return model
+
+def vit_l_16(**kwargs):
+    model = ViT(patch_size=16, dim=1024, depth=24, heads=16, mlp_dim=4096, **kwargs)
+    return model
+
+def vit_l_32(**kwargs):
+    model = ViT(patch_size=32, dim=1024, depth=24, heads=16, mlp_dim=4096, **kwargs)
+    return model
+
+def vit_h_14(**kwargs):
+    model = ViT(patch_size=14, dim=1280, depth=32, heads=16, mlp_dim=5120, **kwargs)
     return model
